@@ -6,7 +6,8 @@ const getInitialData = () => ({
     userPoints: 0,
     totalDisposed: 0,
     usedCodes: [],
-    history: []
+    history: [],
+    coupons: []
 });
 
 let appData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || getInitialData();
@@ -15,6 +16,7 @@ let appData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || getInitialData();
 const totalItemsEl = document.getElementById('admin-total-items');
 const totalWeightEl = document.getElementById('admin-total-weight');
 const totalPointsEl = document.getElementById('admin-total-points');
+const totalCouponsEl = document.getElementById('admin-total-coupons');
 const codesList = document.getElementById('used-codes-list');
 const noCodesEl = document.getElementById('no-codes');
 const btnReset = document.getElementById('btn-reset');
@@ -34,6 +36,7 @@ const updateDashboard = () => {
     totalItemsEl.textContent = appData.totalDisposed;
     totalWeightEl.textContent = `${appData.totalDisposed * PLASTIC_WEIGHT_GRAMS}g`;
     totalPointsEl.textContent = appData.userPoints;
+    totalCouponsEl.textContent = appData.coupons ? appData.coupons.length : 0;
 
     renderUsedCodes();
 };
@@ -45,8 +48,6 @@ const renderUsedCodes = () => {
         noCodesEl.style.display = 'block';
     } else {
         noCodesEl.style.display = 'none';
-
-        // Show last 10 activities with status
         const recentHistory = [...appData.history].reverse().slice(0, 10);
 
         recentHistory.forEach(item => {
