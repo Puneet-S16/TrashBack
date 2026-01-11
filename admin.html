@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrashBack Admin | Global Recovery</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container animate-fade-in">
+        <header style="margin-bottom: 3rem;">
+            <a href="index.html"
+                style="color: var(--text-muted); text-decoration: none; font-size: 0.875rem; display: block; margin-bottom: 1rem;">←
+                Return to User App</a>
+            <h1>Admin Dashboard</h1>
+            <p style="color: var(--text-muted);">Real-time metrics for symbolic plastic recovery.</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-value" id="admin-total-items">0</span>
+                <span class="stat-label">Total Items Disposed</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="admin-total-points">0</span>
+                <span class="stat-label">Total Points Issued</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Used Plastic Codes</h3>
+            <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                Tracking unique identifiers to prevent duplicate claims.
+            </p>
+            <div id="codes-container">
+                <p id="no-codes" style="text-align: center; color: var(--text-muted); padding: 1rem;">No codes used yet.
+                </p>
+                <ul class="log-list" id="used-codes-list"></ul>
+            </div>
+        </div>
+
+        <div class="card" style="border-color: rgba(239, 68, 68, 0.2);">
+            <h3>System Controls</h3>
+            <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                Reset all demo data (This action cannot be undone).
+            </p>
+            <button id="btn-reset" class="danger">
+                <span>Reset Demo Data</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>

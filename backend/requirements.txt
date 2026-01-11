@@ -1,6 +1,0 @@
-fastapi
-uvicorn
-sqlalchemy
-pydantic
-python-multipart
-# SQLite is built-in, but we might need drivers if using async later, but for now standard is fine
