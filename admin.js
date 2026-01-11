@@ -1,5 +1,6 @@
 // Data Management
 const STORAGE_KEY = 'trashback_data';
+const PLASTIC_WEIGHT_GRAMS = 20;
 
 const getInitialData = () => ({
     userPoints: 0,
@@ -12,6 +13,7 @@ let appData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || getInitialData();
 
 // DOM Elements
 const totalItemsEl = document.getElementById('admin-total-items');
+const totalWeightEl = document.getElementById('admin-total-weight');
 const totalPointsEl = document.getElementById('admin-total-points');
 const codesList = document.getElementById('used-codes-list');
 const noCodesEl = document.getElementById('no-codes');
@@ -30,6 +32,7 @@ const showToast = (message, type = 'success') => {
 
 const updateDashboard = () => {
     totalItemsEl.textContent = appData.totalDisposed;
+    totalWeightEl.textContent = `${appData.totalDisposed * PLASTIC_WEIGHT_GRAMS}g`;
     totalPointsEl.textContent = appData.userPoints;
 
     renderUsedCodes();
@@ -43,30 +46,40 @@ const renderUsedCodes = () => {
     } else {
         noCodesEl.style.display = 'none';
 
-        // Show last 10 used codes
-        const recentCodes = [...appData.usedCodes].reverse().slice(0, 10);
+        // Show last 10 activities with status
+        const recentHistory = [...appData.history].reverse().slice(0, 10);
 
-        recentCodes.forEach(code => {
+        recentHistory.forEach(item => {
             const li = document.createElement('li');
             li.className = 'log-item animate-fade-in';
             li.innerHTML = `
-                <span class="log-code">${code}</span>
-                <span class="log-date">Verified Package</span>
+                <div>
+                    <span class="log-code">${item.code}</span>
+                    <div class="log-date">${new Date(item.timestamp).toLocaleString()}</div>
+                </div>
+                <div style="text-align: right;">
+                    <span class="log-points" style="color: var(--success); font-size: 0.8rem; display: block;">VERIFIED</span>
+                    <span style="font-size: 0.7rem; color: var(--text-muted);">Redeemed</span>
+                </div>
             `;
             codesList.appendChild(li);
         });
     }
 };
 
-// Reset Logic
+// Reset Logic with Protection
 btnReset.addEventListener('click', () => {
-    if (confirm('Are you sure you want to reset all demo data? This cannot be undone.')) {
+    const confirmation = confirm('This will erase all demo data and reset points. Continue?');
+    if (confirmation) {
         appData = getInitialData();
         localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
         updateDashboard();
-        showToast('All data has been reset.', 'success');
+        showToast('System data reset successfully.', 'success');
+    } else {
+        showToast('Reset aborted.', 'error');
     }
 });
 
 // Initialization
 updateDashboard();
+console.log("Admin Dashboard Loaded. Tracking integrity and metrics.");

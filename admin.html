@@ -21,10 +21,14 @@
             <p style="color: var(--text-muted);">Real-time metrics for symbolic plastic recovery.</p>
         </header>
 
-        <div class="stats-grid">
+        <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
             <div class="stat-item">
                 <span class="stat-value" id="admin-total-items">0</span>
                 <span class="stat-label">Total Items Disposed</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="admin-total-weight">0g</span>
+                <span class="stat-label">Estimated Weight Saved</span>
             </div>
             <div class="stat-item">
                 <span class="stat-value" id="admin-total-points">0</span>
