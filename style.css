@@ -254,6 +254,13 @@ button.danger:hover {
     animation: fadeIn 0.5s ease-out forwards;
 }
 
+.impact-animate {
+    transition: color 0.3s ease;
+    color: #2dffb3 !important;
+    /* Vibrant highlight during count-up */
+    text-shadow: 0 0 15px rgba(45, 255, 179, 0.5);
+}
+
 /* Responsive */
 @media (max-width: 480px) {
     .container {

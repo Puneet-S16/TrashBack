@@ -135,6 +135,40 @@ const generateCouponCode = () => {
     return `TRASHBACK-FOOD-${random}`;
 };
 
+// Animation Logic
+const animateGreenImpact = (start, end, duration = 700) => {
+    const element = proxyWeightEl;
+    const miniCounter = impactWeightEl;
+    const range = end - start;
+
+    if (range <= 0) return;
+
+    // Add glow effect
+    element.classList.add("impact-animate");
+    miniCounter.classList.add("impact-animate");
+
+    const stepTime = Math.abs(Math.floor(duration / range));
+    let current = start;
+
+    const timer = setInterval(() => {
+        current++;
+        element.textContent = current;
+        miniCounter.textContent = `${current}g Plastic Saved`;
+
+        if (current >= end) {
+            clearInterval(timer);
+            element.textContent = end;
+            miniCounter.textContent = `${end}g Plastic Saved`;
+
+            // Remove glow effect after animation
+            setTimeout(() => {
+                element.classList.remove("impact-animate");
+                miniCounter.classList.remove("impact-animate");
+            }, 300);
+        }
+    }, stepTime);
+};
+
 // Disposal Logic
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -162,6 +196,8 @@ form.addEventListener('submit', (e) => {
         return;
     }
 
+    // Capture previous state for animation
+    const previousImpact = appData.totalDisposed * PLASTIC_WEIGHT_GRAMS;
     const rewardPoints = 5;
     const logEntry = {
         code: code,
@@ -174,8 +210,18 @@ form.addEventListener('submit', (e) => {
     appData.usedCodes.push(code);
     appData.history.push(logEntry);
 
+    const newImpact = appData.totalDisposed * PLASTIC_WEIGHT_GRAMS;
+
     saveData();
-    updateStats();
+
+    // Update basic stats immediately
+    pointsEl.textContent = appData.userPoints;
+    redeemPointsBalanceEl.textContent = appData.userPoints;
+    itemsEl.textContent = appData.totalDisposed;
+
+    // Animate the weight instead of instant jump
+    animateGreenImpact(previousImpact, newImpact);
+
     renderHistory();
 
     input.value = '';
